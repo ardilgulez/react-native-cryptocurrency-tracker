@@ -1,236 +1,40 @@
 import React from "react";
-import { StyleSheet, SafeAreaView, StatusBar, ScrollView } from "react-native";
+import {
+    StyleSheet,
+    SafeAreaView,
+    StatusBar,
+    View,
+    FlatList,
+    Text,
+} from "react-native";
 
 import CryptocurrencyListItem from "./components/CryptocurrencyListItem";
 
-const items = [
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: 0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: -0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: 0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: -0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: 0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: -0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: 0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: -0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: 0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: -0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: 0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: -0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: 0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: -0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: 0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: -0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: 0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: -0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: 0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: -0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: 0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: -0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: 0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: -0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: 0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: -0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: 0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: -0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: 0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: -0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-    {
-        name: "Bitcoin",
-        ticker: "BTC",
-        price: 34678.12,
-        trend: 0.01041524623452,
-        image: "https://source.unsplash.com/random/48x48",
-    },
-];
+import data from "./assets/sample-data";
 
 export default function App() {
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.scrollView}>
-                {items.map((item, index) => (
-                    <CryptocurrencyListItem key={index} {...item} />
-                ))}
-            </ScrollView>
+            <FlatList
+                style={styles.scrollView}
+                data={data}
+                ListHeaderComponent={() => (
+                    <View style={styles.titleWrapper}>
+                        <Text style={styles.titleText}>Markets</Text>
+                        <View style={styles.separator}></View>
+                    </View>
+                )}
+                renderItem={({ item }) => (
+                    <CryptocurrencyListItem
+                        name={item.name}
+                        price={item.current_price}
+                        ticker={item.symbol}
+                        image={item.image}
+                        trend={item.price_change_percentage_24h}
+                    />
+                )}
+                keyExtractor={(item) => item.symbol}
+            />
         </SafeAreaView>
     );
 }
@@ -246,5 +50,20 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         width: "100%",
+    },
+    titleWrapper: {
+        width: "100%",
+        paddingHorizontal: 16,
+        marginTop: 16,
+    },
+    titleText: {
+        fontSize: 24,
+        fontWeight: "bold",
+        color: "black",
+    },
+    separator: {
+        borderWidth: 1,
+        borderColor: "#CCCCCC",
+        marginVertical: 16,
     },
 });

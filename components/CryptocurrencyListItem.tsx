@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "flex-start",
         height: "100%",
+        marginLeft: 16,
     },
     textRightSide: {
         flexDirection: "column",
@@ -60,8 +61,8 @@ interface PropTypes {
 }
 
 const processTrend = (trend: number) => {
-    const trendNumber = Math.round(trend * 10000) / 100;
-    return (trendNumber > 0 ? "+" : "") + trendNumber + "%";
+    const trendNumber = trend.toFixed(2);
+    return (trend > 0 ? "+" : "") + trendNumber + "%";
 };
 
 const CryptocurrencyListItem = ({
@@ -81,11 +82,13 @@ const CryptocurrencyListItem = ({
             />
             <View style={styles.textLeftSide}>
                 <Text style={styles.namePriceText}>{name}</Text>
-                <Text style={styles.tickerText}>{ticker}</Text>
+                <Text style={styles.tickerText}>{ticker.toUpperCase()}</Text>
             </View>
         </View>
         <View style={styles.textRightSide}>
-            <Text style={styles.namePriceText}>{price}</Text>
+            <Text style={styles.namePriceText}>
+                {"$" + price.toLocaleString("en-US")}
+            </Text>
             <Text style={trend > 0 ? styles.uptrendText : styles.downtrendText}>
                 {processTrend(trend)}
             </Text>
