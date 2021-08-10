@@ -21,18 +21,21 @@ import data from "./assets/sample-data";
 const App = () => {
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
-    const snapPoints = useMemo(() => ["25%"], []);
+    const snapPoints = useMemo(() => ["40%"], []);
 
     const [selectedItem, setSelectedItem] =
         useState<CryptocurrencyListItemType>({} as CryptocurrencyListItemType);
 
     // callbacks
-    const handlePresentModalPress = (item: CryptocurrencyListItemType) => {
-        return () => {
-            setSelectedItem(item);
-            bottomSheetModalRef.current?.present();
-        };
-    };
+    const handlePresentModalPress = useCallback(
+        (item: CryptocurrencyListItemType) => {
+            return () => {
+                setSelectedItem(item);
+                bottomSheetModalRef.current?.present();
+            };
+        },
+        [selectedItem]
+    );
 
     const handleSheetChanges = useCallback((index: number) => {
         console.log("handleSheetChanges", index);
