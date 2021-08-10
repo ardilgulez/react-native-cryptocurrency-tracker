@@ -1,6 +1,13 @@
 import React from "react";
 
-import { View, Text, Image, StyleSheet } from "react-native";
+import {
+    View,
+    Text,
+    Image,
+    StyleSheet,
+    TouchableOpacity,
+    GestureResponderEvent,
+} from "react-native";
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -58,6 +65,7 @@ interface PropTypes {
     price: number;
     trend: number;
     image: string;
+    onPress: (event: GestureResponderEvent) => void;
 }
 
 const processTrend = (trend: number) => {
@@ -71,8 +79,9 @@ const CryptocurrencyListItem = ({
     ticker,
     price,
     trend,
+    onPress,
 }: PropTypes) => (
-    <View style={styles.wrapper}>
+    <TouchableOpacity style={styles.wrapper} onPress={onPress}>
         <View style={styles.leftSideWrapper}>
             <Image
                 style={styles.image}
@@ -93,7 +102,7 @@ const CryptocurrencyListItem = ({
                 {processTrend(trend)}
             </Text>
         </View>
-    </View>
+    </TouchableOpacity>
 );
 
 export default CryptocurrencyListItem;

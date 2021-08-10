@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useMemo, useCallback, useState } from "react";
 import {
     StyleSheet,
     SafeAreaView,
@@ -8,36 +8,76 @@ import {
     Text,
 } from "react-native";
 
+import {
+    BottomSheetModal,
+    BottomSheetModalProvider,
+} from "@gorhom/bottom-sheet";
+
 import CryptocurrencyListItem from "./components/CryptocurrencyListItem";
+import BottomSheetContent from "./components/BottomSheetContent";
 
 import data from "./assets/sample-data";
 
-export default function App() {
+const App = () => {
+    const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+    const snapPoints = useMemo(() => ["25%"], []);
+
+    const [selectedItem, setSelectedItem] =
+        useState<CryptocurrencyListItemType>({} as CryptocurrencyListItemType);
+
+    // callbacks
+    const handlePresentModalPress = (item: CryptocurrencyListItemType) => {
+        return () => {
+            setSelectedItem(item);
+            bottomSheetModalRef.current?.present();
+        };
+    };
+
+    const handleSheetChanges = useCallback((index: number) => {
+        console.log("handleSheetChanges", index);
+    }, []);
+
     return (
-        <SafeAreaView style={styles.container}>
-            <FlatList
-                style={styles.scrollView}
-                data={data}
-                ListHeaderComponent={() => (
-                    <View style={styles.titleWrapper}>
-                        <Text style={styles.titleText}>Markets</Text>
-                        <View style={styles.separator}></View>
-                    </View>
-                )}
-                renderItem={({ item }) => (
-                    <CryptocurrencyListItem
-                        name={item.name}
-                        price={item.current_price}
-                        ticker={item.symbol}
-                        image={item.image}
-                        trend={item.price_change_percentage_24h}
-                    />
-                )}
-                keyExtractor={(item) => item.symbol}
-            />
-        </SafeAreaView>
+        <BottomSheetModalProvider>
+            <SafeAreaView style={styles.container}>
+                <FlatList
+                    style={styles.scrollView}
+                    data={data as Array<CryptocurrencyListItemType>}
+                    ListHeaderComponent={() => (
+                        <View style={styles.titleWrapper}>
+                            <Text style={styles.titleText}>Markets</Text>
+                            <View style={styles.separator}></View>
+                        </View>
+                    )}
+                    renderItem={({
+                        item,
+                    }: {
+                        item: CryptocurrencyListItemType;
+                    }) => (
+                        <CryptocurrencyListItem
+                            name={item.name}
+                            price={item.current_price}
+                            ticker={item.symbol}
+                            image={item.image}
+                            trend={item.price_change_percentage_24h}
+                            onPress={handlePresentModalPress(item)}
+                        />
+                    )}
+                    keyExtractor={(item) => item.symbol}
+                />
+                <BottomSheetModal
+                    ref={bottomSheetModalRef}
+                    index={0}
+                    snapPoints={snapPoints}
+                    onChange={handleSheetChanges}
+                >
+                    <BottomSheetContent item={selectedItem} />
+                </BottomSheetModal>
+            </SafeAreaView>
+        </BottomSheetModalProvider>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -67,3 +107,5 @@ const styles = StyleSheet.create({
         marginVertical: 16,
     },
 });
+
+export default App;
