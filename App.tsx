@@ -1,4 +1,10 @@
-import React, { useRef, useMemo, useCallback, useState } from "react";
+import React, {
+    useRef,
+    useMemo,
+    useCallback,
+    useState,
+    useEffect,
+} from "react";
 import {
     StyleSheet,
     SafeAreaView,
@@ -13,10 +19,12 @@ import {
     BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet";
 
+import api from "./api/cryptocurrency-api-client";
+
 import CryptocurrencyListItem from "./components/CryptocurrencyListItem";
 import BottomSheetContent from "./components/BottomSheetContent";
 
-import data from "./assets/sample-data";
+import dummyData from "./assets/sample-data";
 
 const App = () => {
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -25,6 +33,23 @@ const App = () => {
 
     const [selectedItem, setSelectedItem] =
         useState<CryptocurrencyListItemType>({} as CryptocurrencyListItemType);
+
+    const [data, setData] =
+        useState<Array<CryptocurrencyListItemType>>(dummyData);
+
+    const fetchData = () => {
+        api.getCryptocurrencyData()
+            .then(({ data }) => {
+                setData(data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     // callbacks
     const handlePresentModalPress = useCallback(
@@ -36,10 +61,6 @@ const App = () => {
         },
         [selectedItem]
     );
-
-    const handleSheetChanges = useCallback((index: number) => {
-        console.log("handleSheetChanges", index);
-    }, []);
 
     return (
         <BottomSheetModalProvider>
@@ -73,7 +94,6 @@ const App = () => {
                     ref={bottomSheetModalRef}
                     index={0}
                     snapPoints={snapPoints}
-                    onChange={handleSheetChanges}
                 >
                     <BottomSheetContent item={selectedItem} />
                 </BottomSheetModal>
